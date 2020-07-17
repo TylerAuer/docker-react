@@ -1,0 +1,22 @@
+FROM node:alpine
+
+WORKDIR '/app'
+
+COPY package.json .
+RUN npm install
+
+# Not really necessary for the develpment file, but it's good to leave in as 
+# a reference.
+COPY . .
+
+CMD ["npm", "run", "start"]
+
+# To Start Server:
+
+# docker run -it -p 3000:3000 -v /app/node_modules -v $(pwd):/app <container_id>
+# -it               --> Keeps it running
+# -p                --> Sets up the ports so I can access it from the browser
+# -v /app/node...   --> Tells the container to use its copy of node_modules
+# -v $(pwd):/app    --> Tells the container to use the local copy of the app. 
+#                       This last step is what lets us not have to rebuild the
+#                       container image every time we change the app

@@ -1,0 +1,20 @@
+version: "3"
+services: # a service for each container
+  web:
+    stdin_open: true # addresses bug in Create-React-App
+    build: # where to find the docker file
+      context: .
+      dockerfile: Dockerfile.dev
+    ports:
+      - "3000:3000" # specify the ports to link up
+    volumes: # volumes are references to the source for the container's files
+      - /app/node_modules # use the container's version of node_modules
+      - .:/app # use the local version of /app. "." = working directory
+  tests: # Sets up service for testing
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    volumes:
+      - /app/node_modules
+      - .:/app
+    command: ["npm", "run", "test"] # changes the default command to 'npm run tests'
