@@ -1,0 +1,13 @@
+sudo: required
+services:
+  - docker # automatically install the Docker
+
+before_install:
+  - docker build -t tylerauer/docker-react -f Dockerfile.dev .
+
+# Commands needed to run test suite
+# Travis watches and if it gets an exit code other than 0, it knows a test failed
+# Expects tests to run and then exit, but npm run test doesn't automatically exit
+# adding -- --coverage to npm run test makes sure npm run test exits
+script:
+  - docker run tylerauer/docker-react npm run test -- --coverage
