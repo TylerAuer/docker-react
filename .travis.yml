@@ -1,3 +1,4 @@
+language: generic
 sudo: required
 services:
   - docker # automatically install the Docker
@@ -10,4 +11,4 @@ before_install:
 # Expects tests to run and then exit, but npm run test doesn't automatically exit
 # adding -- --coverage to npm run test makes sure npm run test exits
 script:
-  - docker run tylerauer/docker-react npm run test -- --coverage
+  - docker run -e CI=true tylerauer/docker-react npm run test
